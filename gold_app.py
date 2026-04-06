@@ -9,11 +9,28 @@ from datetime import datetime
 
 st.markdown("""
     <style>
+            
     .stAppDeployButton {
         display: none !important;
     }
     </style>
     """, unsafe_allow_html=True)
+
+def fetch_realtime_data():
+    ticker = yf.Ticker("GC=F") # Símbolo del Oro
+    
+    # Esto ayuda a evitar el bloqueo
+    data = ticker.history(period="1d", interval="1m") 
+    
+    # Si usas fast_info o similar, intenta acceder a los datos 
+    # desde el dataframe de history en lugar de llamar a 'fast'
+    if not data.empty:
+        live_price = data['Close'].iloc[-1]
+        prev_close = data['Open'].iloc[0]
+        return live_price, prev_close, data
+    else:
+        # Si Yahoo te bloquea, devuelve valores por defecto para que la app no explote
+        return 0, 0, None
 
 # 1. CONFIGURACIÓN DE LA PÁGINA
 st.set_page_config(page_title="Oro Canillejas", page_icon="img/logo2.webp",layout="wide")
