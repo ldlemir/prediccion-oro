@@ -74,6 +74,7 @@ std_dev_usd = df_hist['y'].tail(30).std()
 # 4. INTERFAZ (UI)
 st.title(f"Oro Canillejas | Tasación Premium 24/7")
 st.write(f"Actualización automática: **{datetime.now().strftime('%H:%M:%S')}**")
+st.warning(f"El precio corresponde casi con total seguridad a una onza de oro (específicamente, a 31.1 gramos)")
 
 moneda = st.sidebar.radio("Ver en:", ["EUR (€)", "USD ($)"])
 conversion = usd_to_eur if "EUR" in moneda else 1.0
